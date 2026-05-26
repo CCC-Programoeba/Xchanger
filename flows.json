@@ -1,0 +1,336 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4326297c462472d6",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "Consulta Divisa",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "iso",
+        "payloadType": "date",
+        "x": 100,
+        "y": 300,
+        "wires": [
+            [
+                "418658d728e7eff6",
+                "d805c1a6e9b21b52",
+                "34cff3e2bdd14cd6",
+                "a4399ea8115f7e3d"
+            ]
+        ]
+    },
+    {
+        "id": "418658d728e7eff6",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "Frankfurter EUR",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.frankfurter.dev/v2/rates?base=EUR&quotes=USD,CNY,JPY",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 320,
+        "y": 340,
+        "wires": [
+            [
+                "ed3bedc5e428e8ed"
+            ]
+        ]
+    },
+    {
+        "id": "d805c1a6e9b21b52",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "Fawaz EUR",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 310,
+        "y": 260,
+        "wires": [
+            [
+                "7e95932342862984"
+            ]
+        ]
+    },
+    {
+        "id": "274e0faf4c25df54",
+        "type": "join",
+        "z": "f6f2187d.f17ca8",
+        "name": "Nodo join",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": true,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 850,
+        "y": 300,
+        "wires": [
+            [
+                "796fcc67a8b6fd53",
+                "bf1c0dacef04f9e6"
+            ]
+        ]
+    },
+    {
+        "id": "bf1c0dacef04f9e6",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 300,
+        "wires": [
+            [
+                "5d769f6cc219cf67"
+            ]
+        ]
+    },
+    {
+        "id": "5d769f6cc219cf67",
+        "type": "postgresql",
+        "z": "f6f2187d.f17ca8",
+        "name": "PostgreSQL db",
+        "query": "SELECT * FROM ;",
+        "postgreSQLConfig": "",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 1240,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "34cff3e2bdd14cd6",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "ExchangeRate EUR",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://open.er-api.com/v6/latest/EUR",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 340,
+        "y": 420,
+        "wires": [
+            [
+                "07fefe67d5c28188"
+            ]
+        ]
+    },
+    {
+        "id": "a4399ea8115f7e3d",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "fxapi  EUR",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://fxapi.app/api/eur.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "ce83c040452a6487"
+            ]
+        ]
+    },
+    {
+        "id": "07fefe67d5c28188",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Name: topic exchangerate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "exchangerate",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 420,
+        "wires": [
+            [
+                "274e0faf4c25df54"
+            ]
+        ]
+    },
+    {
+        "id": "ed3bedc5e428e8ed",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Name: topic frankfurter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "frankfurter",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 340,
+        "wires": [
+            [
+                "274e0faf4c25df54"
+            ]
+        ]
+    },
+    {
+        "id": "7e95932342862984",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Name: topic fawaz",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "fawaz",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [
+                "274e0faf4c25df54"
+            ]
+        ]
+    },
+    {
+        "id": "ce83c040452a6487",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Name: topic fxapi",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "fxapi",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 180,
+        "wires": [
+            [
+                "274e0faf4c25df54"
+            ]
+        ]
+    },
+    {
+        "id": "796fcc67a8b6fd53",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Debugging",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "98d8d62c2692c23d",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-postgresql": "0.15.4"
+        }
+    }
+]

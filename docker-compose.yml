@@ -1,0 +1,31 @@
+# CCC y Adam
+services:
+  nodered:
+    image: nodered/node-red:latest
+    container_name: xchanger_nodered
+    ports:
+      - "32880:1880"
+    volumes:
+      - xchanger_nodered_data:/data
+      - ./flows.json:/data/flows.json
+      - ./package.json:/data/package.json
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    container_name: xchanger_postgres
+    environment:
+      POSTGRES_USER: xchauser
+      POSTGRES_PASSWORD: xchapass
+      POSTGRES_DB: xchadb
+    ports:
+      - "55432:5432"
+    volumes:
+      - xchanger_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  xchanger_nodered_data:
+  xchanger_postgres_data:
