@@ -1,0 +1,20 @@
+# PostgreSQL local data
+postgres_data/
+
+# Node-RED installed dependencies and npm cache
+nodered_data/node_modules/
+nodered_data/.npm/
+
+# Node-RED runtime/config local files
+nodered_data/.config*.json
+nodered_data/.config*.json.backup
+nodered_data/.sessions.json
+nodered_data/settings.js
+
+# Node-RED credentials/secrets/backups
+nodered_data/flows_cred.json
+nodered_data/.flows_cred.json.backup
+nodered_data/.flows.json.backup
+
+# Logs
+*.log

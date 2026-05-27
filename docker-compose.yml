@@ -6,9 +6,7 @@ services:
     ports:
       - "32880:1880"
     volumes:
-      - xchanger_nodered_data:/data
-      - ./flows.json:/data/flows.json
-      - ./package.json:/data/package.json
+      - ./nodered_data:/data
     depends_on:
       - postgres
     restart: unless-stopped
@@ -23,9 +21,6 @@ services:
     ports:
       - "55432:5432"
     volumes:
-      - xchanger_postgres_data:/var/lib/postgresql/data
+      - ./postgres_data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
-
-volumes:
-  xchanger_nodered_data:
-  xchanger_postgres_data:

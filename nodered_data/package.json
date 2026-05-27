@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "description": "Proyecto Xchanger con Node-RED y PostgreSQL, Adam y Carlos",
   "dependencies": {
-    "node-red-contrib-postgresql": "0.15.4"
+    "node-red-contrib-postgresql": "~0.15.4"
   }
 }
