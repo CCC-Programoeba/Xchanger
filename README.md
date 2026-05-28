@@ -4,7 +4,7 @@ docker compose up -d
 2.	En el navegador de nuestra elección, abrir:
 http://localhost:32880
 3.	Ejecutar Inject
-4.	En Powershell: 
+4.	En Powershell/BASH/Terminal: 
 docker exec -it xchanger_postgres psql -U xchauser -d xchadb -c "SELECT * FROM exchange_rates ORDER BY id;"
 
 Autores, estudiantes del IES Jaume II el Just :
