@@ -1,7 +1,8 @@
 # CCC y Adam
 services:
   nodered:
-    image: nodered/node-red:latest
+    build: .
+    image: xchanger_nodered:latest
     container_name: xchanger_nodered
     ports:
       - "32880:1880"
