@@ -8,5 +8,7 @@ http://localhost:32880
 docker exec -it xchanger_postgres psql -U xchauser -d xchadb -c "SELECT * FROM exchange_rates ORDER BY id;"
 
 Autores, estudiantes del IES Jaume II el Just :
-DAW --> Adam Essadaoui
-DAM --> Carlos Collado
+
+- DAW --> Adam Essadaoui
+
+- DAM --> Carlos Collado
